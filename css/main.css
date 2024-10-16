@@ -11,7 +11,6 @@
 
 body {
   background: black url("../assets/svg/bg.svg") no-repeat center/cover;
-  /* height: 100vh; */
   margin: 0;
 }
 
@@ -119,7 +118,7 @@ footer {
   margin: 100px 28px 100px; /* margin-bottom: 100px */
   direction: rtl;
   box-sizing: border-box;
-  padding-bottom: 100px; /* اضافه کردن فاصله به پایین */
+  padding-bottom: 100px;
 }
 
 footer .card {
