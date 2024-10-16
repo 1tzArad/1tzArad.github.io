@@ -49,6 +49,7 @@ section {
   margin: 100px 28px;
   direction: rtl;
   box-sizing: border-box;
+  flex-wrap: wrap;
 }
 
 section .card {
@@ -59,6 +60,7 @@ section .card {
   border-radius: 50px;
   position: relative;
   overflow: hidden;
+  margin: 20px;
 }
 
 section .card img {
@@ -115,7 +117,7 @@ footer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 100px 28px 100px; /* margin-bottom: 100px */
+  margin: 100px 28px 100px;
   direction: rtl;
   box-sizing: border-box;
   padding-bottom: 100px;
@@ -169,4 +171,68 @@ footer .content .underline {
   box-shadow: 0px 4px 10px 0px rgba(255, 241, 0, 0.75);
   border-radius: 1px;
   margin: 10px auto 0;
+}
+
+@media (max-width: 768px) {
+  .site-header .navigation-menu .nav-item {
+    display: block;
+    margin: 10px 0;
+  }
+
+  .site-header .navigation-menu .nav-item a {
+    font-size: 24px;
+  }
+
+  section {
+    flex-direction: column;
+    margin: 50px 20px;
+  }
+
+  section .card {
+    width: 90%;
+    height: auto;
+  }
+
+  section .content h1 {
+    font-size: 80px;
+  }
+
+  section .content p {
+    font-size: 24px;
+  }
+
+  footer .card {
+    width: 90%;
+    height: auto;
+  }
+
+  footer .content h1 {
+    font-size: 40px;
+  }
+
+  footer .content p {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-header .navigation-menu .nav-item a {
+    font-size: 20px;
+  }
+
+  section .content h1 {
+    font-size: 60px;
+  }
+
+  section .content p {
+    font-size: 20px;
+  }
+
+  footer .content h1 {
+    font-size: 30px;
+  }
+
+  footer .content p {
+    font-size: 20px;
+  }
 }
