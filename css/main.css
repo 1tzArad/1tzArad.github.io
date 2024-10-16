@@ -1,47 +1,52 @@
 @import url("../assets/fonts/Gofteh.css");
 @import url("./scrollbar.css");
 @import url("../assets/fonts/YekanBakh.css");
+
 :root {
   --primary-color: #2c2c2c;
   --secondary-color: #4f4f4f;
   --accent-color: #8a8a8a;
   --complementary-color: #bfbfbf;
 }
+
 body {
-  background-color: black;
-  background-image: url("../assets/svg/bg.svg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  height: 100vh;
+  background: black url("../assets/svg/bg.svg") no-repeat center/cover;
+  /* height: 100vh; */
   margin: 0;
 }
+
 .site-header {
   font-family: Gofteh;
   color: var(--accent-color);
   direction: rtl;
   text-align: center;
 }
+
 .site-header .navigation-menu .nav-item {
   display: inline;
   margin-right: 60px;
 }
+
 .site-header .navigation-menu .nav-item a {
   text-decoration: none;
   color: var(--accent-color);
   font-size: 30px;
+  transition: color 0.3s, text-shadow 0.3s;
 }
+
 .site-header .navigation-menu .nav-item.selected a {
   color: var(--complementary-color);
   pointer-events: none;
 }
+
 .site-header .navigation-menu .nav-item a:hover {
   text-shadow: 0px 0px 20px var(--accent-color);
 }
+
 section {
   display: flex;
-  justify-content: center; /* مرکز چین عرضی */
-  align-items: center; /* مرکز چین ارتفاعی */
+  justify-content: center;
+  align-items: center;
   margin: 100px 28px;
   direction: rtl;
   box-sizing: border-box;
@@ -62,10 +67,9 @@ section .card img {
   bottom: 0;
   left: 50%;
   transform: translate(-50%, 0);
-  height: 400px; /* ارتفاع تصویر به طور خودکار تنظیم می‌شود */
-  width: 100%; /* عرض تصویر 100% کارت */
-  max-height: none; /* از max-height جلوگیری می‌کند */
-  object-fit: contain; /* حفظ نسبت ابعاد تصویر */
+  height: 100%;
+  width: auto;
+  object-fit: cover;
 }
 
 section .content {
@@ -83,7 +87,87 @@ section .content h1 {
 section .content p {
   color: var(--complementary-color);
   font-family: "YekanBakh";
-  font-weight: 700; /* برای بولد */
+  font-weight: 700;
   font-size: 30px;
   margin: 0;
+}
+
+section.introduce .content h1 {
+  font-size: 60px;
+}
+
+section.introduce .content p {
+  font-size: 20px;
+  font-weight: 600;
+  width: 500px;
+  margin-top: 20px;
+}
+
+section.introduce .content .underline {
+  width: 200px;
+  height: 2px;
+  background-color: #fff100;
+  box-shadow: 0px 4px 10px 0px rgba(255, 241, 0, 0.75);
+  border-radius: 1px;
+  margin: 10px auto 0;
+}
+
+footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 100px 28px 100px; /* margin-bottom: 100px */
+  direction: rtl;
+  box-sizing: border-box;
+  padding-bottom: 100px; /* اضافه کردن فاصله به پایین */
+}
+
+footer .card {
+  background-color: rgba(79, 79, 79, 0.4);
+  border: 3px solid var(--accent-color);
+  width: 400px;
+  margin-top: 150px;
+  height: 400px;
+  border-radius: 50px;
+  position: relative;
+  overflow: hidden;
+}
+
+footer .card img {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  height: 100%;
+  width: auto;
+  object-fit: cover;
+}
+
+footer .content {
+  margin: 0 40px;
+}
+
+footer .content h1 {
+  color: var(--complementary-color);
+  font-family: Gofteh;
+  font-size: 60px;
+  margin: 0;
+  direction: rtl;
+}
+
+footer .content p {
+  color: var(--complementary-color);
+  font-family: "YekanBakh";
+  font-weight: 700;
+  font-size: 30px;
+  margin: 0;
+}
+
+footer .content .underline {
+  width: 400px;
+  height: 2px;
+  background-color: #fff100;
+  box-shadow: 0px 4px 10px 0px rgba(255, 241, 0, 0.75);
+  border-radius: 1px;
+  margin: 10px auto 0;
 }
