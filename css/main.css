@@ -22,8 +22,8 @@ body {
 }
 
 .site-header .navigation-menu .nav-item {
-  display: inline;
-  margin-right: 60px;
+  display: inline-block;
+  margin-right: 30px; /* Reduced margin for better spacing */
 }
 
 .site-header .navigation-menu .nav-item a {
@@ -55,8 +55,8 @@ section {
 section .card {
   background-color: rgba(79, 79, 79, 0.4);
   border: 3px solid var(--accent-color);
-  width: 400px; /* Set fixed width */
-  height: 400px; /* Set fixed height */
+  width: 400px; /* Fixed width */
+  height: 400px; /* Fixed height */
   border-radius: 50px;
   position: relative;
   overflow: hidden;
@@ -66,7 +66,7 @@ section .card {
 section .card img {
   width: 100%; /* Make width responsive */
   height: 100%; /* Make height responsive */
-  object-fit: cover; /* Ensure the image covers the card area */
+  object-fit: contain; /* Contain the image within the card */
   object-position: center; /* Center the image */
 }
 
@@ -92,6 +92,7 @@ section .content p {
 
 section.introduce .content h1 {
   font-size: 60px;
+  text-align: center;
 }
 
 section.introduce .content p {
@@ -123,8 +124,8 @@ footer {
 footer .card {
   background-color: rgba(79, 79, 79, 0.4);
   border: 3px solid var(--accent-color);
-  width: 400px; /* Set fixed width */
-  height: 400px; /* Set fixed height */
+  width: 400px; /* Fixed width */
+  height: 400px; /* Fixed height */
   border-radius: 50px;
   position: relative;
   overflow: hidden;
@@ -134,7 +135,7 @@ footer .card {
 footer .card img {
   width: 100%; /* Make width responsive */
   height: 100%; /* Make height responsive */
-  object-fit: cover; /* Ensure the image covers the card area */
+  object-fit: contain; /* Contain the image within the card */
   object-position: center; /* Center the image */
 }
 
@@ -148,6 +149,7 @@ footer .content h1 {
   font-size: 60px;
   margin: 0;
   direction: rtl;
+  text-align: center;
 }
 
 footer .content p {
@@ -159,7 +161,7 @@ footer .content p {
 }
 
 footer .content .underline {
-  width: 400px;
+  width: 200px;
   height: 2px;
   background-color: #fff100;
   box-shadow: 0px 4px 10px 0px rgba(255, 241, 0, 0.75);
@@ -167,39 +169,89 @@ footer .content .underline {
   margin: 10px auto 0;
 }
 
+/* General Styles */
+.card {
+  display: flex;
+  flex-direction: column; /* Arrange items vertically */
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  margin: 20px; /* Margin between cards */
+  border-radius: 15px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+  overflow: hidden; /* Prevent overflow of inner elements */
+}
+
+.card img {
+  width: 100%; /* Make the image responsive */
+  height: 400px; /* Set the image height equal to the card height */
+  object-fit: cover; /* Cover the card without distortion */
+}
+
+/* General Styles */
+.card {
+  display: flex;
+  flex-direction: column; /* Arrange items vertically */
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  margin: 20px; /* Margin between cards */
+  border-radius: 15px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+  overflow: hidden; /* Prevent overflow of inner elements */
+}
+
+.card img {
+  width: 100%; /* Make the image responsive */
+  height: 400px; /* Set the image height equal to the card height */
+  object-fit: cover; /* Cover the card without distortion */
+}
+
 /* Media Queries for Responsive Design */
 @media (max-width: 768px) {
   .site-header .navigation-menu .nav-item {
     display: block; /* Stack items vertically */
     margin: 10px 0; /* Add margin between items */
+    text-align: center; /* Center the navigation items */
   }
 
   section {
-    flex-direction: column; /* Stack sections vertically */
     margin: 50px 14px; /* Adjust margin */
+    display: flex; /* Ensure section uses flex */
+    flex-direction: column; /* Stack cards vertically */
   }
 
   section .card {
     width: 90%; /* Make cards responsive */
-    height: 90%; /* Adjust height */
-    max-height: 400px; /* Keep a maximum height */
-    max-width: 400px; /* Keep a maximum width */
+    height: 400px; /* Keep fixed height */
+    aspect-ratio: 1 / 1; /* Set aspect ratio to square */
+  }
+
+  footer .card {
+    width: 90%; /* Make cards responsive */
+    height: 400px; /* Keep fixed height */
+    aspect-ratio: 1 / 1; /* Set aspect ratio to square */
+  }
+  section .card img {
+    height: 100%; /* Set image height to fill card */
   }
 
   section .content h1 {
-    font-size: 40px; /* Reduce font size */
+    font-size: 45px; /* Increase font size */
+    text-align: center; /* Center the title */
   }
 
   section .content p {
-    font-size: 20px; /* Reduce font size */
+    font-size: 22px; /* Increase font size */
+    text-align: center; /* Center the paragraph */
   }
 
   footer .content h1 {
-    font-size: 40px; /* Reduce font size */
+    font-size: 45px; /* Increase font size */
+    text-align: center; /* Center the footer title */
   }
 
   footer .content p {
-    font-size: 20px; /* Reduce font size */
+    font-size: 22px; /* Increase font size */
+    text-align: center; /* Center the footer paragraph */
   }
 }
 
@@ -209,26 +261,31 @@ footer .content .underline {
   }
 
   section .content h1 {
-    font-size: 30px; /* Further reduce font size */
+    font-size: 36px; /* Further reduce font size */
   }
 
   section .content p {
-    font-size: 18px; /* Further reduce font size */
+    font-size: 20px; /* Further reduce font size */
   }
 
   footer .content h1 {
-    font-size: 30px; /* Further reduce font size */
+    font-size: 36px; /* Further reduce font size */
   }
 
   footer .content p {
-    font-size: 18px; /* Further reduce font size */
+    font-size: 20px; /* Further reduce font size */
   }
 
   /* Additional adjustments for very small screens */
   section .card {
     margin: 5px; /* Reduce margin for very small screens */
-    max-width: 100%; /* Allow full width on very small screens */
-    height: auto; /* Allow height to adjust automatically */
+    width: 95%; /* Allow full width on very small screens */
+    height: 400px; /* Keep fixed height */
+    aspect-ratio: 1 / 1; /* Set aspect ratio to square */
+  }
+
+  section .card img {
+    height: 100%; /* Set image height to fill card */
   }
 
   section .content {
@@ -236,18 +293,23 @@ footer .content .underline {
   }
 
   section .content h1 {
-    font-size: 24px; /* Reduce font size */
+    font-size: 28px; /* Further increase font size */
   }
 
   section .content p {
-    font-size: 16px; /* Reduce font size */
+    font-size: 18px; /* Further increase font size */
   }
 
   footer .content h1 {
-    font-size: 24px; /* Reduce font size */
+    font-size: 28px; /* Further increase font size */
   }
-
+  footer .card {
+    margin: 5px; /* Reduce margin for very small screens */
+    width: 95%; /* Allow full width on very small screens */
+    height: 400px; /* Keep fixed height */
+    aspect-ratio: 1 / 1; /* Set aspect ratio to square */
+  }
   footer .content p {
-    font-size: 16px; /* Reduce font size */
+    font-size: 18px; /* Further increase font size */
   }
 }
