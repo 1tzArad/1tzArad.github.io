@@ -43,13 +43,13 @@ body {
 }
 
 section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  place-items: center; /* مرکز کردن به صورت عمودی و افقی */
   margin: 100px 28px;
   direction: rtl;
   box-sizing: border-box;
-  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+  grid-gap: 20px; /* فاصله بین کارت‌ها */
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* به صورت پویا تعداد ستون‌ها را تنظیم می‌کند */
 }
 
 section .card {
@@ -88,6 +88,8 @@ section .content p {
   font-weight: 700;
   font-size: 30px;
   margin: 0;
+  max-width: 100%; /* عرض پویا */
+  overflow-wrap: break-word; /* شکستن کلمات طولانی */
 }
 
 section.introduce .content h1 {
@@ -112,13 +114,14 @@ section.introduce .content .underline {
 }
 
 footer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  place-items: center; /* مرکز کردن به صورت عمودی و افقی */
   margin: 100px 28px;
   direction: rtl;
   box-sizing: border-box;
   padding-bottom: 100px;
+  grid-gap: 20px; /* فاصله بین کارت‌ها */
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* به صورت پویا تعداد ستون‌ها را تنظیم می‌کند */
 }
 
 footer .card {
@@ -158,6 +161,8 @@ footer .content p {
   font-weight: 700;
   font-size: 30px;
   margin: 0;
+  max-width: 100%; /* عرض پویا */
+  overflow-wrap: break-word; /* شکستن کلمات طولانی */
 }
 
 footer .content .underline {
@@ -168,31 +173,14 @@ footer .content .underline {
   border-radius: 1px;
   margin: 10px auto 0;
 }
-footer .social-media{
+
+footer .social-media {
   color: var(--complementary-color);
   font-size: 8vh;
   margin-top: 150px;
   font-family: Gofteh;
 }
-/* General Styles */
-.card {
-  display: flex;
-  flex-direction: column; /* Arrange items vertically */
-  justify-content: center; /* Center content vertically */
-  align-items: center; /* Center content horizontally */
-  margin: 20px; /* Margin between cards */
-  border-radius: 15px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
-  overflow: hidden; /* Prevent overflow of inner elements */
-}
 
-.card img {
-  width: 100%; /* Make the image responsive */
-  height: 400px; /* Set the image height equal to the card height */
-  object-fit: cover; /* Cover the card without distortion */
-}
-
-/* General Styles */
 .card {
   display: flex;
   flex-direction: column; /* Arrange items vertically */
@@ -235,6 +223,7 @@ footer .social-media{
     height: 400px; /* Keep fixed height */
     aspect-ratio: 1 / 1; /* Set aspect ratio to square */
   }
+
   section .card img {
     height: 100%; /* Set image height to fill card */
   }
@@ -247,6 +236,8 @@ footer .social-media{
   section .content p {
     font-size: 22px; /* Increase font size */
     text-align: center; /* Center the paragraph */
+    max-width: 100%; /* عرض پویا */
+    overflow-wrap: break-word; /* شکستن کلمات طولانی */
   }
 
   footer .content h1 {
@@ -257,6 +248,8 @@ footer .social-media{
   footer .content p {
     font-size: 22px; /* Increase font size */
     text-align: center; /* Center the footer paragraph */
+    max-width: 100%; /* عرض پویا */
+    overflow-wrap: break-word; /* شکستن کلمات طولانی */
   }
 }
 
@@ -271,6 +264,8 @@ footer .social-media{
 
   section .content p {
     font-size: 20px; /* Further reduce font size */
+    width: 10px; /* Adjust width for small screens */
+    overflow-wrap: break-word; /* Prevent content overflow */
   }
 
   footer .content h1 {
@@ -279,9 +274,10 @@ footer .social-media{
 
   footer .content p {
     font-size: 20px; /* Further reduce font size */
+    width: 90%; /* Adjust width for small screens */
+    overflow-wrap: break-word; /* Prevent content overflow */
   }
 
-  /* Additional adjustments for very small screens */
   section .card {
     margin: 5px; /* Reduce margin for very small screens */
     width: 95%; /* Allow full width on very small screens */
@@ -289,32 +285,10 @@ footer .social-media{
     aspect-ratio: 1 / 1; /* Set aspect ratio to square */
   }
 
-  section .card img {
-    height: 100%; /* Set image height to fill card */
-  }
-
-  section .content {
-    margin: 0 10px; /* Reduce content margin */
-  }
-
-  section .content h1 {
-    font-size: 28px; /* Further increase font size */
-  }
-
-  section .content p {
-    font-size: 18px; /* Further increase font size */
-  }
-
-  footer .content h1 {
-    font-size: 28px; /* Further increase font size */
-  }
   footer .card {
     margin: 5px; /* Reduce margin for very small screens */
     width: 95%; /* Allow full width on very small screens */
     height: 400px; /* Keep fixed height */
     aspect-ratio: 1 / 1; /* Set aspect ratio to square */
-  }
-  footer .content p {
-    font-size: 18px; /* Further increase font size */
   }
 }
