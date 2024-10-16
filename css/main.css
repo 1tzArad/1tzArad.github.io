@@ -168,7 +168,12 @@ footer .content .underline {
   border-radius: 1px;
   margin: 10px auto 0;
 }
-
+footer .social-media{
+  color: var(--complementary-color);
+  font-size: 8vh;
+  margin-top: 150px;
+  font-family: Gofteh;
+}
 /* General Styles */
 .card {
   display: flex;
