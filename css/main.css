@@ -1,0 +1,89 @@
+@import url("../assets/fonts/Gofteh.css");
+@import url("./scrollbar.css");
+@import url("../assets/fonts/YekanBakh.css");
+:root {
+  --primary-color: #2c2c2c;
+  --secondary-color: #4f4f4f;
+  --accent-color: #8a8a8a;
+  --complementary-color: #bfbfbf;
+}
+body {
+  background-color: black;
+  background-image: url("../assets/svg/bg.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  margin: 0;
+}
+.site-header {
+  font-family: Gofteh;
+  color: var(--accent-color);
+  direction: rtl;
+  text-align: center;
+}
+.site-header .navigation-menu .nav-item {
+  display: inline;
+  margin-right: 60px;
+}
+.site-header .navigation-menu .nav-item a {
+  text-decoration: none;
+  color: var(--accent-color);
+  font-size: 30px;
+}
+.site-header .navigation-menu .nav-item.selected a {
+  color: var(--complementary-color);
+  pointer-events: none;
+}
+.site-header .navigation-menu .nav-item a:hover {
+  text-shadow: 0px 0px 20px var(--accent-color);
+}
+section {
+  display: flex;
+  justify-content: center; /* مرکز چین عرضی */
+  align-items: center; /* مرکز چین ارتفاعی */
+  margin: 100px 28px;
+  direction: rtl;
+  box-sizing: border-box;
+}
+
+section .card {
+  background-color: rgba(79, 79, 79, 0.4);
+  border: 3px solid var(--accent-color);
+  width: 400px;
+  height: 400px;
+  border-radius: 50px;
+  position: relative;
+  overflow: hidden;
+}
+
+section .card img {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  height: 400px; /* ارتفاع تصویر به طور خودکار تنظیم می‌شود */
+  width: 100%; /* عرض تصویر 100% کارت */
+  max-height: none; /* از max-height جلوگیری می‌کند */
+  object-fit: contain; /* حفظ نسبت ابعاد تصویر */
+}
+
+section .content {
+  margin: 0 40px;
+}
+
+section .content h1 {
+  color: var(--complementary-color);
+  font-family: Gofteh;
+  font-size: 125px;
+  margin: 0;
+  direction: rtl;
+}
+
+section .content p {
+  color: var(--complementary-color);
+  font-family: "YekanBakh";
+  font-weight: 700; /* برای بولد */
+  font-size: 30px;
+  margin: 0;
+}
