@@ -28,13 +28,13 @@ body {
 
 .site-header .navigation-menu .nav-item {
   display: inline;
-  margin-right: 60px;
+  margin-right: 4vw;
 }
 
 .site-header .navigation-menu .nav-item a {
   text-decoration: none;
   color: var(--accent-color);
-  font-size: 30px;
+  font-size: 2.5rem; /* Increase font size */
   transition: color 0.3s, text-shadow 0.3s;
 }
 
@@ -51,7 +51,7 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 100px 28px;
+  margin: 10vh 2vw;
   direction: rtl;
   box-sizing: border-box;
   flex-wrap: wrap;
@@ -60,30 +60,33 @@ section {
 section .card {
   background-color: rgba(79, 79, 79, 0.4);
   border: 3px solid var(--accent-color);
-  width: 100%;
+  width: 90%;
   max-width: 400px;
-  height: auto;
+  aspect-ratio: 1; /* Maintain square aspect ratio */
   border-radius: 50px;
   position: relative;
   overflow: hidden;
-  margin: 20px;
+  margin: 2vh 0;
 }
 
 section .card img {
-  position: relative;
-  width: 100%;
-  height: auto;
-  object-fit: cover;
+  width: 90%;  /* Change width to 90% of the card */
+  height: 90%; /* Change height to 90% of the card */
+  object-fit: contain; /* Keep the aspect ratio of the image */
+  position: absolute; /* Position the image absolutely */
+  top: 50%;  /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Translate to center */
 }
 
 section .content {
-  margin: 0 40px;
+  margin: 0 5vw;
 }
 
 section .content h1 {
   color: var(--complementary-color);
   font-family: Gofteh;
-  font-size: 125px;
+  font-size: 6vw; /* Increase font size */
   margin: 0;
   direction: rtl;
 }
@@ -92,67 +95,71 @@ section .content p {
   color: var(--complementary-color);
   font-family: "YekanBakh";
   font-weight: 700;
-  font-size: 30px;
+  font-size: 1.8rem; /* Increase font size */
   margin: 0;
 }
 
 section.introduce .content h1 {
-  font-size: 60px;
+  font-size: 5vw; /* Adjust size */
 }
 
 section.introduce .content p {
-  font-size: 20px;
+  font-size: 1.5rem; /* Increase font size */
   font-weight: 600;
-  width: 500px;
-  margin-top: 20px;
+  width: 90%;
+  margin-top: 2vh;
 }
 
 section.introduce .content .underline {
-  width: 200px;
+  width: 50%;
   height: 2px;
   background-color: #fff100;
   box-shadow: 0px 4px 10px 0px rgba(255, 241, 0, 0.75);
   border-radius: 1px;
-  margin: 10px auto 0;
+  margin: 0 auto; /* Center the underline */
+  margin-top: 10px; /* Adjust the margin-top to position it below h1 */
 }
 
 footer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 100px 28px 100px;
+  margin: 10vh 2vw;
   direction: rtl;
   box-sizing: border-box;
-  padding-bottom: 100px;
+  padding-bottom: 5vh;
 }
 
 footer .card {
   background-color: rgba(79, 79, 79, 0.4);
   border: 3px solid var(--accent-color);
-  width: 100%;
+  width: 90%;
   max-width: 400px;
-  margin-top: 150px;
-  height: auto;
+  aspect-ratio: 1; /* Maintain square aspect ratio */
   border-radius: 50px;
   position: relative;
   overflow: hidden;
+  margin-top: 5vh;
 }
 
 footer .card img {
-  position: relative;
-  width: 100%;
-  height: auto;
-  object-fit: cover;
+  width: 90%;  /* Change width to 90% of the card */
+  height: 90%; /* Change height to 90% of the card */
+  object-fit: contain; /* Keep the aspect ratio of the image */
+  position: absolute; /* Position the image absolutely */
+  top: 50%;  /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Translate to center */
 }
 
 footer .content {
-  margin: 0 40px;
+  margin: 0 5vw;
 }
 
 footer .content h1 {
   color: var(--complementary-color);
   font-family: Gofteh;
-  font-size: 60px;
+  font-size: 5vw; /* Increase font size */
   margin: 0;
   direction: rtl;
 }
@@ -161,27 +168,60 @@ footer .content p {
   color: var(--complementary-color);
   font-family: "YekanBakh";
   font-weight: 700;
-  font-size: 30px;
+  font-size: 1.8rem; /* Increase font size */
   margin: 0;
 }
 
 footer .content .underline {
-  width: 400px;
+  width: 90%;
   height: 2px;
   background-color: #fff100;
   box-shadow: 0px 4px 10px 0px rgba(255, 241, 0, 0.75);
   border-radius: 1px;
-  margin: 10px auto 0;
+  margin: 0 auto; /* Center the underline */
+  margin-top: 10px; /* Adjust the margin-top to position it below h1 */
 }
 
 @media (max-width: 768px) {
   section .card {
     margin: 15px;
   }
+
+  .site-header .navigation-menu .nav-item a {
+    font-size: 2rem; /* Adjust for smaller screens */
+  }
+
+  section .content h1 {
+    font-size: 7vw; /* Increase font size */
+  }
+
+  section .content p {
+    font-size: 1.5rem; /* Increase font size */
+  }
 }
 
 @media (max-width: 480px) {
   section .card {
     margin: 10px;
+  }
+
+  .site-header .navigation-menu .nav-item a {
+    font-size: 1.5rem; /* Adjust for smaller screens */
+  }
+
+  section .content h1 {
+    font-size: 8vw; /* Increase font size */
+  }
+
+  section .content p {
+    font-size: 1.2rem; /* Increase font size */
+  }
+
+  footer .content h1 {
+    font-size: 7vw; /* Increase font size */
+  }
+
+  footer .content p {
+    font-size: 1.5rem; /* Increase font size */
   }
 }
