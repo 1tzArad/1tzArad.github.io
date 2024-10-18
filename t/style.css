@@ -1,0 +1,124 @@
+body {
+    background-color: rgb(49, 44, 65)
+}
+@font-face {
+    font-family: "vazir";
+    src: url("fonts/Vazir.woff") format('woff');
+}
+
+.container {
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 90vw;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    box-shadow: 0 10px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 20px;
+    background-color: rgb(255, 255, 255);
+}
+h1 {
+    font-family: 'Vazir', Arial, sans-serif;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.file {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.filepond--credits {
+    display: none;
+}
+
+.none {
+    display: none;
+}
+
+button {
+    font-family: 'Vazir', Arial, sans-serif;
+    width: 100px;
+    background-color: rgba(49, 44, 65, 0.211);
+    border: none; /* Remove border */
+    border-radius: 0 6px 6px 0; /* Rounded corners on right side */
+    transition: 0.3s;
+    padding: 0; /* Remove padding */
+    cursor: pointer;
+    color: black; /* Text color */
+    display: flex; /* Use flexbox to center text */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+    box-sizing: border-box; /* Include padding in width */
+    /* Use flex-grow to ensure the button height matches the textarea */
+    flex-grow: 0;
+    flex-shrink: 0;
+    height: auto; /* Let the height adjust automatically */
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: rgba(49, 44, 65, 0.407);
+
+}
+
+.filepond--drop-label {
+    background-color: rgba(49, 44, 65, 0.096);
+    transition: 0.3s;
+    border-radius: 6px;
+
+}
+
+.filepond--drop-label:hover {
+    background-color: rgba(49, 44, 65, 0.19);
+}
+
+.text-wrap {
+    position: relative;
+    background-color: #eee;
+    padding: 25px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+textarea {
+    width: 100%; /* Take full available width */
+    padding: 0.8em 1em;
+    font-size: 1em;
+    border: none; /* Remove border */
+    outline: none; /* Remove outline */
+    resize: none; /* Disable resizing */
+    border-radius: 6px 0 0 6px; /* Rounded corners on left side */
+    box-sizing: border-box; /* Include padding in width */
+    min-height: 25px; /* Minimum height of 40px */
+    line-height: 1em; /* Line height for readability */
+    margin: 0; /* Remove margin */
+    overflow: hidden; /* Hide overflow when resizing */
+    display: block;
+    text-align: justify;
+}
+
+
+textarea::-webkit-scrollbar {
+    width: 4px;
+}
+textarea::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+textarea::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+textarea::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+  
+.textsex {
+    display: flex; /* Use flexbox for layout */
+    border: 1px solid #ccc; /* Border around both elements */
+    border-radius: 6px; /* Rounded corners */
+    overflow: hidden; /* Ensure content does not overflow */
+    background-color: #fff; /* Background color */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
