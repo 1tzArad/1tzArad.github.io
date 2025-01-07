@@ -1,120 +1,62 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1tzArad</title>
-    <link href="profile.png" rel="shortcut icon">
-    <script src="https://kit.fontawesome.com/8260336184.js" crossorigin="anonymous"></script>
+    <link href="skin-head.png" rel="shortcut icon">
     <meta property="og:type" content="website">
     <meta property="og:title" content="1tzArad">
     <meta property="og:description" content="I'm Arad. Want to get to know each other?">
     <meta property="og:url" content="https://1tzArad.xyz">
-    <meta property="og:image" content="https://1tzArad.xyz/profile.png">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script>
-    <link href="style.css" rel="stylesheet">
+    <meta property="og:image" content="https://1tzArad.xyz/skin-head.png">
+    <title>Arad</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #121212, #000);
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+            max-width: 90%;
+            width: 50%;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2em;
+        }
+        a {
+            color: #1e90ff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .login-link {
+            font-weight: bold;
+            margin-left: 10px;
+            color: #4b9aff;
+        }
+        .login-link:hover {
+            color: #1e90ff;
+        }
+    </style>
 </head>
-<body onload="typeWriter()" >
+<body>
 
-    <nav class="navbar navbar-expand-sm glass-nav navbar-dark fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="profile.png" alt="SextyNine" style="width:40px;" class="rounded-pill"> 
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse text-black" id="mynavbar">
-              <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                  <a class="nav-link nav-txt" href="#info">About Me</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link nav-txt" href="#skills">My Skills</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-      
-    <!-- Use any element to open the sidenav -->      
-    
-    <div class="background bg-image vh-100 shadow-1-strong particles-js" id="particles-js"></div>
-
-    <div id="info" class="container d-flex flex-column align-items-center justify-content-center text-center h-100 text-white">
-        <img src="profile.png" class="img-fluid rounded-circle" style="height: 23vh;" alt="1tzArad">
-        <br>
-        <h1 id="whoisme">Yo, I'm </h1>
-        <br>
-        <h4 id="whoismed"></h4>
-        <br>
-        <div style="display: inline" class="glass-div shadow">
-            <button type="button" onclick="window.open('https://discord.gg/CbpYTqRYJH','_blank')" class="glass-button fa-brands fa-discord fa-lg shadow"></button>
-            <button type="button" onclick=" window.open('https://github.com/1tzArad','_blank')" class="glass-button fa-brands fa-github fa-lg shadow"></button>             
-        </div>    
+    <div class="container">
+        <h1>1tzArad.xyz</h1>
+        <p>This site is now private and is only for personal use. If you want access or have any questions, please contact us on <a href="https://t.me/iztadr" target="_blank">@iztadr</a>.</p>
+        <p>If you want to log in, please proceed through this page. <a href="login-page.html" class="login-link">here</a></p>
     </div>
-
-    <div id="skills" class="container d-flex flex-column align-items-center justify-content-center text-left h-100 text-white">
-        <h1 id="whoisme">My Skills</h1>
-        <br>
-        <div style="display: inline" class="glass-div shadow progress justify-content-center w-75 h-auto text-black">
-            <div class="glass-div w-100 my-1">
-                <h6>&nbsp<i class="fa-brands fa-html5"></i>  HTML</h6>
-                <div class="progress" style="height:20px">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:90%">90%</div>
-                </div>    
-            </div>
-            <div class="glass-div w-100 my-1">
-                <h6>&nbsp<i class="fa-brands fa-css3-alt"></i>   CSS</h6>
-                <div class="progress" style="height:20px">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:15%">15%</div>
-                </div>    
-            </div>
-            <div class="glass-div w-100 my-1">
-                <h6>&nbsp<i class="fa-brands fa-js"></i>   JavaScript</h6>
-                <div class="progress" style="height:20px">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:50%">50%</div>
-                </div>    
-            </div>
-            <div class="glass-div w-100 my-1">
-                <h6>&nbsp<i class="fa-brands fa-php"></i>   PHP</h6>
-                <div class="progress" style="height:20px">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:80%">80%</div>
-                </div>    
-            </div>
-            <div class="glass-div w-100 my-1">
-                <h6>&nbsp<i class="fa-brands fa-wordpress"></i>   WordPress</h6>
-                <div class="progress" style="height:20px">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:30%">30%</div>
-                </div>    
-            </div>
-            <div class="glass-div w-100 my-1">
-                <h6>TypeScript</h6>
-                <div class="progress" style="height:20px">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:80%">80%</div>
-                </div>    
-            </div>
-        </div>    
-    </div>
-
-
-
-    <div class="toast show position-fixed end-0 bottom-0 mx-3 my-3" id="abjagh">
-        <div class="toast-header">
-          <strong class="me-auto">You have a message from 1tzArad</strong>
-          <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
-        </div>
-        <div class="toast-body">
-          <p class="text-black" onclick="window.open('https://github.com/mohammad87115/mohammad87115.github.io')">Welcome to this site! This source belongs entirely to mohammad87115, and you can click on this message to view his GitHub repository!</p>
-        </div>
-      </div>
-    </div>
-
 
 </body>
 </html>
