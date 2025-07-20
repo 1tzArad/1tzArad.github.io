@@ -1,62 +1,155 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="skin-head.png" rel="shortcut icon">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="1tzArad">
-    <meta property="og:description" content="I'm Arad. Want to get to know each other?">
-    <meta property="og:url" content="https://1tzArad.xyz">
-    <meta property="og:image" content="https://1tzArad.xyz/skin-head.png">
-    <title>Arad</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #121212, #000);
-            color: #fff;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
-        }
-        .container {
-            padding: 20px;
-            max-width: 90%;
-            width: 50%;
-        }
-        h1 {
-            font-size: 2em;
-            margin-bottom: 20px;
-        }
-        p {
-            font-size: 1.2em;
-        }
-        a {
-            color: #1e90ff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .login-link {
-            font-weight: bold;
-            margin-left: 10px;
-            color: #4b9aff;
-        }
-        .login-link:hover {
-            color: #1e90ff;
-        }
-    </style>
-</head>
-<body>
+<html lang="en" class="bg-black text-white">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>1tzArad – Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
 
-    <div class="container">
-        <h1>1tzArad.xyz</h1>
-        <p>This site is now private and is only for personal use. If you want access or have any questions, please contact us on <a href="https://t.me/silentKenshi" target="_blank">@silentKenshi</a>.</p>
-        <!-- <p>If you want to log in, please proceed through this page. <a href="login-page.html" class="login-link">here</a></p> -->
+  <body class="h-screen w-screen flex font-sans overflow-hidden">
+    <!-- Mobile Menu -->
+    <div class="md:hidden fixed top-4 left-4 z-50">
+      <button id="menuBtn" class="text-white focus:outline-none">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
     </div>
 
-</body>
+    <div id="mobileMenu"
+      class="fixed inset-0 bg-black z-40 transform -translate-x-full transition-transform duration-300 md:hidden">
+      <div class="w-2/3 h-full border-r border-gray-700 p-8 space-y-6">
+        <h1 class="text-4xl font-extrabold">1tzArad</h1>
+        <p class="text-gray-400 text-lg">Back-end Developer</p>
+        <div class="text-gray-400 text-sm space-y-1">
+          <p><strong>Location:</strong> Iran / Shiraz</p>
+          <p><strong>Born in</strong> 2009 | <span id="age-mob">...</span></p>
+        </div>
+        <div class="flex space-x-4 text-gray-400">
+          <a href="https://github.com/1tzArad" target="_blank" class="hover:text-white">GitHub</a>
+          <a href="https://linkedin.com/in/your-linkedin" target="_blank" class="hover:text-white">LinkedIn</a>
+          <a href="https://twitter.com/your-twitter" target="_blank" class="hover:text-white">Twitter</a>
+        </div>
+        <div class="flex flex-wrap gap-3 text-sm text-gray-300">
+          <span class="px-3 py-1 bg-gray-800 rounded-full">TypeScript</span>
+          <span class="px-3 py-1 bg-gray-800 rounded-full">Javascript</span>
+          <span class="px-3 py-1 bg-gray-800 rounded-full">Node.js</span>
+          <span class="px-3 py-1 bg-gray-800 rounded-full">Tailwind CSS</span>
+          <span class="px-3 py-1 bg-gray-800 rounded-full">Typeorm</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skeleton Loading -->
+    <div id="skeleton" class="absolute inset-0 flex h-full w-full animate-pulse bg-black z-30">
+      <div class="w-1/3 hidden md:flex flex-col items-center justify-center space-y-8 border-r border-gray-700 h-full p-10">
+        <div class="space-y-4 w-full max-w-xs">
+          <div class="h-10 bg-gray-700 rounded w-3/4 mx-auto"></div>
+          <div class="h-6 bg-gray-700 rounded w-2/3 mx-auto"></div>
+        </div>
+        <div class="space-y-2 w-full max-w-xs">
+          <div class="h-4 bg-gray-700 rounded w-3/4 mx-auto"></div>
+          <div class="h-4 bg-gray-700 rounded w-1/2 mx-auto"></div>
+        </div>
+        <div class="flex space-x-4 justify-center">
+          <div class="h-4 bg-gray-700 rounded w-1/4"></div>
+          <div class="h-4 bg-gray-700 rounded w-1/4"></div>
+          <div class="h-4 bg-gray-700 rounded w-1/4"></div>
+        </div>
+        <div class="flex flex-wrap gap-3 justify-center">
+          <div class="h-6 bg-gray-700 rounded w-16"></div>
+          <div class="h-6 bg-gray-700 rounded w-16"></div>
+          <div class="h-6 bg-gray-700 rounded w-16"></div>
+          <div class="h-6 bg-gray-700 rounded w-20"></div>
+          <div class="h-6 bg-gray-700 rounded w-20"></div>
+        </div>
+        <div class="h-4 bg-gray-700 rounded w-1/2 mx-auto"></div>
+      </div>
+
+      <div class="w-full md:w-2/3 h-full relative px-10 overflow-y-auto">
+        <div class="py-16 space-y-4 max-w-2xl mx-auto">
+          <div class="h-6 bg-gray-700 rounded w-3/4"></div>
+          <div class="h-6 bg-gray-700 rounded w-2/3"></div>
+          <div class="h-6 bg-gray-700 rounded w-5/6"></div>
+          <div class="h-6 bg-gray-700 rounded w-4/5"></div>
+          <div class="h-6 bg-gray-700 rounded w-1/2"></div>
+          <div class="h-6 bg-gray-700 rounded w-4/6"></div>
+          <div class="h-6 bg-gray-700 rounded w-2/3"></div>
+          <div class="h-6 bg-gray-700 rounded w-5/6"></div>
+          <div class="h-6 bg-gray-700 rounded w-3/4"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="content" class="hidden h-full w-full flex overflow-hidden">
+      <div class="w-1/3 hidden md:flex flex-col items-center justify-center space-y-8 border-r border-gray-700 h-full p-10">
+        <div class="text-center">
+          <h1 class="text-5xl font-extrabold">1tzArad</h1>
+          <p class="text-gray-400 text-xl mt-2">Back-end Developer</p>
+        </div>
+        <div class="text-gray-400 text-sm space-y-1 text-center">
+          <p><strong>Location:</strong> Iran / Shiraz</p>
+          <p><strong>Born in</strong> 2009 | <span id="age">...</span></p>
+        </div>
+        <div class="flex flex-col space-y-4 w-full max-w-xs">
+          <div class="flex space-x-4 text-gray-400 justify-center">
+            <a href="https://github.com/1tzArad" target="_blank" class="hover:text-white">GitHub</a>
+            <a href="https://linkedin.com/in/your-linkedin" target="_blank" class="hover:text-white">LinkedIn</a>
+            <a href="https://twitter.com/your-twitter" target="_blank" class="hover:text-white">Twitter</a>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-3 text-sm text-gray-300 justify-center">
+          <span class="px-3 py-1 bg-gray-800 rounded-full">TypeScript</span>
+          <span class="px-3 py-1 bg-gray-800 rounded-full">Javascript</span>
+          <span class="px-3 py-1 bg-gray-800 rounded-full">Node.js</span>
+          <span class="px-3 py-1 bg-gray-800 rounded-full">Tailwind CSS</span>
+          <span class="px-3 py-1 bg-gray-800 rounded-full">Typeorm</span>
+        </div>
+        <footer class="text-xs text-gray-600 pt-12">&copy; 2025 1tzArad — All rights reserved.</footer>
+      </div>
+
+      <div class="flex-1 h-full relative px-10 overflow-y-auto">
+        <div class="py-16 text-gray-300 text-base leading-relaxed max-w-2xl mx-auto space-y-6">
+          <p>
+            Hi, I'm Arad, a self-taught back-end developer from Shiraz, Iran. I'm 16 years old and I've been passionate about coding for a few years now. My journey started with building small Discord bots using JavaScript, which eventually led me to explore web development and backend technologies more seriously.
+          </p>
+          <p>
+            Over time, I realized my real interest is in back-end development. I enjoy working with technologies like Node.js, TypeScript, and SQL-based tools like TypeORM. I’m always curious to learn new things and improve my skills through hands-on experience and real-world projects.
+          </p>
+          <p>
+            If you're looking for someone to help you with backend development or writing simple bots, feel free to reach out!
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const birthYear = 2009;
+      const currentYear = new Date().getFullYear();
+      document.getElementById("age").textContent = currentYear - birthYear;
+      document.getElementById("age-mob").textContent = currentYear - birthYear;
+
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          document.getElementById("skeleton").style.display = "none";
+          document.getElementById("content").classList.remove("hidden");
+        }, 2000);
+      });
+
+      const mobileMenu = document.getElementById('mobileMenu');
+      const menuBtn = document.getElementById('menuBtn');
+
+      menuBtn.addEventListener('click', () => {
+        if (mobileMenu.classList.contains('-translate-x-full')) {
+          mobileMenu.classList.remove('-translate-x-full');
+        } else {
+          mobileMenu.classList.add('-translate-x-full');
+        }
+      });
+    </script>
+  </body>
 </html>
