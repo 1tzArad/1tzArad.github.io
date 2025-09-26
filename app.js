@@ -66,7 +66,7 @@
     async projects() {
       const config = window.SITE_CONFIG;
       const username = config.github?.username || config.contact?.github?.split('/').pop()?.replace('/', '');
-      
+
       if (!username) {
         printLine('<span class="text-red-400">Error:</span> GitHub username not configured.');
         printLine('Add "github": {"username": "yourname"} to config.js');
@@ -74,14 +74,14 @@
       }
 
       printLine(`<span class="text-primary">Fetching repositories for</span> <span class="text-accent">${escapeHtml(username)}</span>...`);
-      
+
       try {
         const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=10`);
         if (!response.ok) {
           throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
         const repos = await response.json();
-        
+
         if (!repos.length) {
           printLine('No public repositories found.');
           return;
@@ -89,19 +89,20 @@
 
         printLine(`<span class="text-primary">Recent repositories:</span>`);
         printLine('');
-        
+
         repos.forEach((repo) => {
           const name = link(repo.name, repo.html_url);
           const desc = repo.description ? ` — <span class="text-secondary">${escapeHtml(repo.description)}</span>` : '';
           const lang = repo.language ? ` <span class="text-accent">[${escapeHtml(repo.language)}]</span>` : '';
           const stars = repo.stargazers_count > 0 ? ` <span class="text-yellow-400">★${repo.stargazers_count}</span>` : '';
           const updated = new Date(repo.updated_at).toLocaleDateString();
-          
-          printLine(`${name}${desc}${lang}${stars}`);
+          const fork = repo.fork ? ` <span class="text-gray-400">[FORK]</span>` : '';
+
+          printLine(`${name}${desc}${lang}${stars}${fork}`);
           printLine(`<span class="text-secondary">Updated:</span> ${escapeHtml(updated)}`);
           printLine('');
         });
-        
+
       } catch (error) {
         printLine(`<span class="text-red-400">Error fetching repositories:</span> ${escapeHtml(error.message)}`);
         printLine('Make sure the username is correct and the repository is public.');
@@ -344,7 +345,7 @@
         lastTabTime = now;
         lastTabPrefix = prefix;
 
-        const cp = (function commonPrefix(arr){
+        const cp = (function commonPrefix(arr) {
           if (!arr.length) return '';
           let p = arr[0];
           for (let i = 1; i < arr.length; i += 1) {
