@@ -4,7 +4,7 @@ window.SITE_CONFIG = {
     title: 'Jr Backend Developer',
     location: 'Shiraz, Iran',
     email: '1tzArad.9@gmail.com',
-    website: 'https://Arad.wtf',
+    website: 'https://1tzarad.github.io/',
     summary:
       'A gamer who codes (a beginner, really)',
   },
