@@ -9,10 +9,10 @@ window.SITE_CONFIG = {
       'A gamer who codes (a beginner, really)',
   },
   skills: {
-    'Languages': ['JavaScript', 'TypeScript', 'Golang (newbie)'],
+    'Languages': ['JavaScript', 'TypeScript', 'Golang (I’m still learning)'],
     'Frontend': ['HTML', 'CSS', 'TailwindCSS'],
-    'Backend': ['Node.js', 'Express', 'Gin'],
-    'Databases': ['PostgreSQL', 'MongoDB', 'Sql'],
+    'Backend': ['Node.js', 'Express', 'Gin (go stuff I’m learning)'],
+    'Databases': ['PostgreSQL', 'MongoDB', 'Sql (btw, I hate it)'],
     'Tools': ['Git', 'npm'],
   },
 
