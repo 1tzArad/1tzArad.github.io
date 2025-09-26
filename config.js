@@ -20,7 +20,7 @@ window.SITE_CONFIG = {
     email: '1tzArad.9@gmail.com',
     github: 'https://github.com/1tzArad',
     discord: 'idfkwhatusernametouse',
-    telegram: "@SilentKenshi"
+    telegram: "@@idfkwhatusernametouse"
   },
 
   github: {
