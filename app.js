@@ -51,6 +51,11 @@
       list.forEach((l) => printLine(escapeHtml(l)));
     },
 
+     help2() {
+      printLine('<span class="text-primary">Available commands:</span>');
+      printLine('<span class="text-primary">Donbal Chi Migardi namosan ?</span>')
+    },
+
     about() {
       const p = window.SITE_CONFIG.profile;
       printLine(`<span class="text-primary font-semibold">${escapeHtml(p.name)}</span> — ${escapeHtml(p.title)}`);
