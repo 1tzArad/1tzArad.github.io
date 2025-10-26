@@ -109,6 +109,17 @@
       }
     },
 
+    dick(){
+      printLine("26 kir")
+    },
+
+    fart(){
+      printLine("FART!")
+    },
+
+    pussy(){
+      printLine("bibit!")
+    },
 
 
     skills() {
@@ -154,6 +165,24 @@
     if (commands[cmd]) {
       try {
         commands[cmd](...args);
+      } catch (e) {
+        printLine(`<span class="text-red-400">Error:</span> ${escapeHtml(String(e))}`);
+      }
+    } else if(cmd === "کیر"){
+      try {
+        command.dick();
+      } catch (e) {
+        printLine(`<span class="text-red-400">Error:</span> ${escapeHtml(String(e))}`);
+      }
+    }else if(cmd === "گوز"){
+      try {
+        command.fart();
+      } catch (e) {
+        printLine(`<span class="text-red-400">Error:</span> ${escapeHtml(String(e))}`);
+      }
+    }else if(cmd === "کص"){
+      try {
+        command.pussy();
       } catch (e) {
         printLine(`<span class="text-red-400">Error:</span> ${escapeHtml(String(e))}`);
       }
