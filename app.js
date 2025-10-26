@@ -168,19 +168,19 @@
       } catch (e) {
         printLine(`<span class="text-red-400">Error:</span> ${escapeHtml(String(e))}`);
       }
-    } else if(cmd === "کیر"){
+    } else if(cmd == "کیر"){
       try {
         command.dick();
       } catch (e) {
         printLine(`<span class="text-red-400">Error:</span> ${escapeHtml(String(e))}`);
       }
-    }else if(cmd === "گوز"){
+    }else if(cmd == "گوز"){
       try {
         command.fart();
       } catch (e) {
         printLine(`<span class="text-red-400">Error:</span> ${escapeHtml(String(e))}`);
       }
-    }else if(cmd === "کص"){
+    }else if(cmd == "کص"){
       try {
         command.pussy();
       } catch (e) {
