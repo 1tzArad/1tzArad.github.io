@@ -168,25 +168,7 @@
       } catch (e) {
         printLine(`<span class="text-red-400">Error:</span> ${escapeHtml(String(e))}`);
       }
-    } else if(cmd == "کیر"){
-      try {
-        command.dick();
-      } catch (e) {
-        printLine(`<span class="text-red-400">Error:</span> ${escapeHtml(String(e))}`);
-      }
-    }else if(cmd == "گوز"){
-      try {
-        command.fart();
-      } catch (e) {
-        printLine(`<span class="text-red-400">Error:</span> ${escapeHtml(String(e))}`);
-      }
-    }else if(cmd == "کص"){
-      try {
-        command.pussy();
-      } catch (e) {
-        printLine(`<span class="text-red-400">Error:</span> ${escapeHtml(String(e))}`);
-      }
-    } else {
+     } else {
       printLine(`Command not found: <span class="text-red-400">${escapeHtml(cmd)}</span>. Type <span class="text-primary">help</span>.`);
     }
   }
