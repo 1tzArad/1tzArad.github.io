@@ -51,7 +51,7 @@
       list.forEach((l) => printLine(escapeHtml(l)));
     },
 
-     help2() {
+    help2() {
       printLine('<span class="text-primary">Available commands:</span>');
       printLine('<span class="text-primary">Donbal Chi Migardi namosan ?</span>')
     },
@@ -114,15 +114,15 @@
       }
     },
 
-    dick(){
+    dick() {
       printLine("26 kir")
     },
 
-    fart(){
+    fart() {
       printLine("FART!")
     },
 
-    pussy(){
+    pussy() {
       printLine("bibit!")
     },
 
@@ -173,7 +173,25 @@
       } catch (e) {
         printLine(`<span class="text-red-400">Error:</span> ${escapeHtml(String(e))}`);
       }
-     } else {
+    } else if (cmd === "کیر") {
+      try {
+        commands.dick();
+      } catch (e) {
+        printLine(`<span class="text-red-400">Error:</span> ${escapeHtml(String(e))}`);
+      }
+    } else if (cmd === "گوز") {
+      try {
+        commands.fart();
+      } catch (e) {
+        printLine(`<span class="text-red-400">Error:</span> ${escapeHtml(String(e))}`);
+      }
+    } else if (cmd === "کص") {
+      try {
+        commands.pussy();
+      } catch (e) {
+        printLine(`<span class="text-red-400">Error:</span> ${escapeHtml(String(e))}`);
+      }
+    } else {
       printLine(`Command not found: <span class="text-red-400">${escapeHtml(cmd)}</span>. Type <span class="text-primary">help</span>.`);
     }
   }
