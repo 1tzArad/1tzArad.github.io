@@ -9,18 +9,40 @@ window.SITE_CONFIG = {
       'A gamer who codes (a beginner, really)',
   },
   skills: {
-    'Languages': ['JavaScript', 'TypeScript', 'Golang (I’m still learning)'],
-    'Frontend': ['HTML', 'CSS', 'TailwindCSS'],
-    'Backend': ['Node.js', 'Express', 'Gin (go stuff I’m learning)'],
-    'Databases': ['PostgreSQL', 'MongoDB', 'Sql (btw, I hate it)'],
-    'Tools': ['Git', 'npm'],
+    'Languages': [
+      'JavaScript (no longer actively used)',
+      'TypeScript (no longer actively used)',
+      'Go (currently learning)'
+    ],
+    
+    'Frontend': [
+      'HTML',
+      'CSS',
+      'Tailwind CSS'
+    ],
+    
+    'Backend': [
+      'Node.js',
+      'Express.js',
+      'Gin (learning)'
+    ],
+    
+    'Databases': [
+      'PostgreSQL',
+      'MongoDB',
+      'SQL'
+    ],
+    
+    'Tools': [
+      'Git',
+      'npm'
+    ],
   },
 
   contact: {
     email: '1tzArad.9@gmail.com',
     github: 'https://github.com/1tzArad',
-    discord: 'idfkwhatusernametouse',
-    telegram: "@idfkwhatusernametouse"
+    telegram: "@A0Zero"
   },
 
   github: {
