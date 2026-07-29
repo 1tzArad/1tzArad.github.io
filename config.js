@@ -1,10 +1,10 @@
 window.SITE_CONFIG = {
   profile: {
-    name: '1tzArad',
+    name: 'A0Zero',
     title: 'Jr Backend Developer',
-    location: 'Shiraz, Iran',
-    email: '1tzArad.9@gmail.com',
-    website: 'https://1tzarad.github.io/',
+    location: 'Hell/Limbo',
+    email: 'contact@A0Zero.ir',
+    website: 'https://A0Zero.ir/',
     summary:
       'A gamer who codes (a beginner, really)',
   },
@@ -35,14 +35,15 @@ window.SITE_CONFIG = {
     
     'Tools': [
       'Git',
-      'npm'
+      'npm',
+      'docker'
     ],
   },
 
   contact: {
-    email: '1tzArad.9@gmail.com',
+    email: 'contact@A0Zero.ir',
     github: 'https://github.com/1tzArad',
-    telegram: "@A0Zero"
+    telegram: "@sysrqtrigger"
   },
 
   github: {
