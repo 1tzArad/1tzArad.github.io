@@ -1,129 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>A0's Terminal</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-	<link rel="shortcut icon" type="image/x-icon" href="favicon.png" />
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              background: "#0a0a0a",
-              surface: "#111111",
-              primary: "#ffffff",
-              secondary: "#a3a3a3",
-              accent: "#e5e5e5",
-            },
-            fontFamily: {
-              mono: [
-                "ui-monospace",
-                "SFMono-Regular",
-                "Menlo",
-                "Monaco",
-                "Consolas",
-                "Liberation Mono",
-                "Courier New",
-                "monospace",
-              ],
-            },
-          },
-        },
-      };
-    </script>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A0/OS</title>
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+  <div id="grid-overlay" aria-hidden="true"></div>
 
-    <style>
-      .caret-block::after {
-        content: " ";
-        display: inline-block;
-        width: 0.6ch;
-        height: 1em;
-        background: currentColor;
-        margin-left: 2px;
-        animation: blink 1s steps(1, start) infinite;
-        vertical-align: -0.15em;
-      }
-      @keyframes blink {
-        50% {
-          opacity: 0;
-        }
-      }
+  <div id="desktop">
+    <div id="desktop-icons"></div>
+  </div>
 
-      body {
-        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="white" d="M3 2l10 10-6 2-2 6L3 2z"/></svg>')
-            2 2,
-          crosshair;
-      }
-      input,
-      textarea,
-      [contenteditable="true"] {
-        cursor: text;
-      }
+  <div id="windows-container"></div>
 
-      #output::-webkit-scrollbar {
-        width: 10px;
-      }
-      #output::-webkit-scrollbar-track {
-        background: #0d0d0d;
-      }
-      #output::-webkit-scrollbar-thumb {
-        background: #2a2a2a;
-        border-radius: 8px;
-      }
-      #output::-webkit-scrollbar-thumb:hover {
-        background: #3a3a3a;
-      }
+  <div id="taskbar">
+    <div id="taskbar-left">
+      <button id="launcher-btn" title="Applications Menu" tabindex="0">A0</button>
+    </div>
+    <div id="taskbar-center" role="tablist"></div>
+    <div id="taskbar-right">
+      <span id="taskbar-clock">--:--</span>
+    </div>
+  </div>
 
-      #prompt-input {
-        caret-color: transparent;
-      }
-      ::selection {
-        background: #ffffff22;
-      }
-    </style>
-  </head>
-  <body class="min-h-screen bg-background text-slate-200 antialiased">
-    <section id="terminal" class="h-screen w-screen p-4 sm:p-8">
-      <div
-        class="h-full w-full rounded-lg border border-slate-800 bg-surface flex flex-col"
-      >
-        <div
-          id="output"
-          class="flex-1 overflow-y-auto p-3 sm:p-5 space-y-2 text-[13px] sm:text-sm font-mono"
-          aria-live="polite"
-        ></div>
+  <div id="launcher-menu" class="hidden" role="menu"></div>
 
-        <div
-          id="completion"
-          class="px-3 sm:px-5 pb-1 font-mono text-[12px] sm:text-[13px] text-secondary whitespace-pre"
-        ></div>
-
-        <div
-          id="prompt"
-          class="px-3 sm:px-5 py-3 font-mono text-[13px] sm:text-sm flex items-center"
-        >
-          <span class="select-none text-green-400"
-            ><span class="select-none text-green-400">guest</span
-            ><span class="select-none text-green-400">@</span
-            ><span class="select-none text-green-400">Arad</span></span
-          >
-          <span class="mx-2 select-none text-secondary">:</span>
-          <span id="cwd" class="select-none text-blue-400">~</span>
-          <span class="mx-2 select-none text-secondary">$</span>
-          <span
-            id="prompt-input"
-            class="outline-none"
-            contenteditable="true"
-            role="textbox"
-            aria-label="Terminal command input"
-          ></span>
-        </div>
-      </div>
-    </section>
-
-    <script src="./config.js"></script>
-    <script src="./app.js"></script>
-  </body>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
 </html>
