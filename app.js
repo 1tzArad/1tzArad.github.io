@@ -104,11 +104,11 @@
         if (dist2 < 150) {
           var alpha = (1 - dist2 / 150) * 0.12;
           ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y);
-          ctx.strokeStyle = 'rgba(88,166,255,' + alpha + ')'; ctx.lineWidth = 0.5; ctx.stroke();
+          ctx.strokeStyle = 'rgba(6,214,255,' + alpha + ')'; ctx.lineWidth = 0.5; ctx.stroke();
         }
       }
       ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(168,85,247,' + p.opacity + ')'; ctx.fill();
+      ctx.fillStyle = 'rgba(6,214,255,' + p.opacity + ')'; ctx.fill();
     }
     this.animId = requestAnimationFrame(function () { self.animate(); });
   };
@@ -118,18 +118,17 @@
     terminal: { name: 'Terminal', icon: '\u276E\u005F\u276F', w: 780, h: 460 },
     files: { name: 'Files', icon: '\uD83D\uDCC1', w: 640, h: 400 },
     sysinfo: { name: 'System Info', icon: '\u24D8', w: 540, h: 400 },
-    physknow: { name: 'Physics Knowledge', icon: '\u269B', w: 720, h: 480 },
     settings: { name: 'Settings', icon: '\u2699', w: 500, h: 380 },
     projects: { name: 'Projects', icon: '\uD83D\uDCC2', w: 720, h: 480 },
     browser: { name: 'Browser', icon: '\uD83C\uDF10', w: 900, h: 560 }
   };
-  var APP_ORDER = ['terminal', 'files', 'projects', 'physknow', 'sysinfo', 'settings'];
+  var APP_ORDER = ['terminal', 'files', 'projects', 'sysinfo', 'settings'];
 
   // ==================== WINDOW MANAGER ====================
   var windows = [];
   var winIdCounter = 0;
   var zIndexCounter = 10;
-  var WINDOW_OFFSETS = { terminal: 0, files: 30, sysinfo: 60, physknow: 50, projects: 70, settings: 90 };
+  var WINDOW_OFFSETS = { terminal: 0, files: 30, sysinfo: 60, projects: 70, settings: 90 };
   var windowLifecycles = {}; // { winId: { cleanup: function } }
 
   function createWindow(appId, data) {
@@ -165,6 +164,7 @@
           '<span class="win-btn maximize" data-action="maximize" title="Maximize"></span>' +
           '<span class="win-btn minimize" data-action="minimize" title="Minimize"></span>' +
         '</div>' +
+        '<span class="window-title-icon">' + def.icon + '</span>' +
         '<span class="window-title-text">' + escapeHtml(def.name) + '</span>' +
       '</div>' +
       '<div class="window-content"></div>';
@@ -310,7 +310,9 @@
       btn.className = 'taskbar-item';
       if (win.zIndex === zIndexCounter) btn.classList.add('active');
       if (win.minimized) btn.classList.add('minimized');
-      btn.textContent = win.title;
+      var def = APP_DEFS[win.appId] || {};
+      btn.innerHTML = '<span class="taskbar-item-icon">' + (def.icon || '') + '</span>' +
+        '<span class="taskbar-item-label">' + escapeHtml(win.title) + '</span>';
       btn.dataset.winId = win.id;
       btn.addEventListener('click', function () {
         toggleWindowTaskbar(parseInt(this.dataset.winId));
@@ -351,7 +353,9 @@
     var container = $('desktop-icons');
     container.innerHTML = '';
     for (var i = 0; i < APP_ORDER.length; i++) {
-      var appId = APP_ORDER[i], def = APP_DEFS[appId];
+      var appId = APP_ORDER[i];
+      if (appId === 'projects') continue; // Projects shown as desktop folder shortcut
+      var def = APP_DEFS[appId];
       var icon = document.createElement('button');
       icon.className = 'desktop-icon';
       icon.innerHTML = '<div class="desktop-icon-icon">' + def.icon + '</div><div class="desktop-icon-label">' + escapeHtml(def.name) + '</div>';
@@ -363,15 +367,26 @@
       })(appId);
       container.appendChild(icon);
     }
+
+    // Desktop shortcut to the Projects folder
+    var projShortcut = document.createElement('button');
+    projShortcut.className = 'desktop-icon desktop-icon-shortcut';
+    projShortcut.innerHTML = '<div class="desktop-icon-icon">\uD83D\uDCC1</div><div class="desktop-icon-label">Projects</div>';
+    projShortcut.title = 'Open Projects folder';
+    projShortcut.addEventListener('dblclick', function () {
+      var win = createWindow('files', { path: '/home/user/projects' });
+      return win;
+    });
+    container.appendChild(projShortcut);
   }
 
   // ==================== APP CONTENT CREATION ====================
   function createAppContent(appId, contentEl, winId, data) {
     switch (appId) {
       case 'terminal': createTerminal(contentEl, winId); break;
-      case 'files': createFileManager(contentEl, winId); break;
+      case 'files': createFileManager(contentEl, winId, data); break;
       case 'sysinfo': createSystemInfo(contentEl); break;
-      case 'physknow': createPhysicsKnowledge(contentEl, winId); break;
+
       case 'projects': createProjects(contentEl, winId); break;
       case 'browser': createBrowser(contentEl, winId, data); break;
       case 'settings': createSettings(contentEl); break;
@@ -675,6 +690,66 @@
     }, 300);
   }
 
+  // ==================== MARKDOWN RENDERER & REPO CACHE ====================
+  var repoCache = null;
+  function setRepoCache(repos) { repoCache = repos || null; }
+  function getRepoCache() { return repoCache || []; }
+
+  function mdEscape(s) { return escapeHtml(s); }
+  function mdInline(s) {
+    s = mdEscape(s);
+    s = s.replace(/`([^`]+)`/g, '<code>$1</code>');
+    s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    s = s.replace(/(^|[^*])\*([^*\n]+)\*/g, '$1<em>$2</em>');
+    s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noreferrer">$1</a>');
+    s = s.replace(/(^|[^"'`>])(https?:\/\/[^\s<]+)/g, '$1<a href="$2" target="_blank" rel="noreferrer">$2</a>');
+    return s;
+  }
+  function renderMarkdown(md) {
+    if (!md) return '<p class="md-empty">(empty)</p>';
+    var lines = String(md).replace(/\r\n/g, '\n').split('\n');
+    var html = '', i = 0, inCode = false, codeBuf = [];
+    function pushList() {}
+    while (i < lines.length) {
+      var line = lines[i];
+      if (line.trim().lastIndexOf('```', 0) === 0) {
+        if (inCode) { html += '<pre><code class="md-code">' + mdEscape(codeBuf.join('\n')) + '</code></pre>'; codeBuf = []; inCode = false; }
+        else { inCode = true; codeBuf = []; }
+        i++; continue;
+      }
+      if (inCode) { codeBuf.push(line); i++; continue; }
+      var t = line.trim();
+      if (t === '') { i++; continue; }
+      if (/^#{1,6}\s/.test(t)) {
+        var lvl = t.match(/^(#{1,6})\s/)[1].length;
+        html += '<h' + lvl + '>' + mdInline(t.replace(/^#{1,6}\s/, '')) + '</h' + lvl + '>';
+        i++; continue;
+      }
+      if (/^[-*+]\s/.test(t)) {
+        html += '<ul>';
+        while (i < lines.length && /^[-*+]\s/.test(lines[i].trim())) { html += '<li>' + mdInline(lines[i].trim().replace(/^[-*+]\s/, '')) + '</li>'; i++; }
+        html += '</ul>'; continue;
+      }
+      if (/^\d+\.\s/.test(t)) {
+        html += '<ol>';
+        while (i < lines.length && /^\d+\.\s/.test(lines[i].trim())) { html += '<li>' + mdInline(lines[i].trim().replace(/^\d+\.\s/, '')) + '</li>'; i++; }
+        html += '</ol>'; continue;
+      }
+      if (/^>\s?/.test(t)) { html += '<blockquote><p>' + mdInline(t.replace(/^>\s?/, '')) + '</p></blockquote>'; i++; continue; }
+      if (/^\s*-{3,}\s*$/.test(t) || /^\s*\*{3,}\s*$/.test(t)) { html += '<hr>'; i++; continue; }
+      var para = [];
+      while (i < lines.length && lines[i].trim() !== '') {
+        var pl = lines[i].trim();
+        if (/^(#{1,6}\s|[-*+]\s|\d+\.\s|>\s?|```)/.test(pl)) break;
+        para.push(pl); i++;
+      }
+      if (para.length) html += '<p>' + mdInline(para.join('<br>')) + '</p>';
+      else i++;
+    }
+    if (inCode && codeBuf.length) html += '<pre><code class="md-code">' + mdEscape(codeBuf.join('\n')) + '</code></pre>';
+    return html;
+  }
+
   // ==================== FILE MANAGER ====================
   var VIRTUAL_FS = {
     'home': { type: 'dir', children: {
@@ -682,13 +757,7 @@
         'about.txt': { type: 'file', size: '1.2K' },
         'skills.json': { type: 'file', size: '0.8K' },
         'contact.md': { type: 'file', size: '0.3K' },
-        'projects': { type: 'dir', children: {
-          'website-v2.0': { type: 'dir', children: {
-            'index.html': { type: 'file', size: '2.1K' },
-            'styles.css': { type: 'file', size: '8.7K' },
-            'app.js': { type: 'file', size: '19K' },
-          }},
-        }},
+        'projects': { type: 'dir', dynamic: true, children: {} },
       }},
     }},
     'etc': { type: 'dir', children: {
@@ -704,28 +773,27 @@
 
   var FILE_CONTENTS = {
     'about.txt': 'Name: A0Zero\nTitle: Jr Backend Developer\nLocation: Hell/Limbo\nEmail: contact@A0Zero.ir\nWebsite: https://A0Zero.ir/\nSummary: A gamer who codes (a beginner, really)',
-    'skills.json': '{\n  "Languages": ["JavaScript", "TypeScript", "Go"],\n  "Frontend": ["HTML", "CSS", "Tailwind CSS"],\n  "Backend": ["Node.js", "Express.js", "Gin"],\n  "Databases": ["PostgreSQL", "MongoDB", "SQL"],\n  "Tools": ["Git", "npm", "docker"]\n}',
+    'skills.json': '{\n  "Languages": ["JavaScript (no longer actively used)", "TypeScript (no longer actively used)", "Go (currently learning)"],\n  "Frontend": ["HTML", "CSS", "Tailwind CSS"],\n  "Backend": ["Node.js", "Express.js", "Gin (learning)"],\n  "Databases": ["PostgreSQL", "MongoDB", "SQL"],\n  "Tools": ["Git", "npm", "Docker"]\n}',
     'contact.md': '# Contact\n\n- Email: contact@A0Zero.ir\n- GitHub: https://github.com/1tzArad\n- Telegram: @sysrqtrigger',
-    'index.html': '<!DOCTYPE html>\n<html lang="en">\n<head>\n  <title>A0/OS</title>\n</head>\n<body>\n  <!-- Desktop Environment -->\n</body>\n</html>',
-    'styles.css': '/* A0/OS Desktop Styles */\n:root {\n  --accent: #a855f7;\n  --bg-primary: #0a0a0a;\n}',
-    'app.js': '// A0/OS Desktop Environment\n(function() {\n  "use strict";\n  // Complete desktop implementation\n})();',
     'hostname': 'a0os-desktop',
     'version': 'A0/OS v1.0\nKernel: JavaScript ES6\nBuild: 2024',
     'system.log': '[BOOT] A0/OS v1.0 starting...\n[BOOT] Kernel loaded\n[BOOT] Desktop environment initialized\n[BOOT] System ready\n[USER] Login: guest\n[DESKTOP] Session started',
   };
 
-  function createFileManager(container) {
+  function createFileManager(container, winId, data) {
     container.innerHTML =
       '<div class="fm-wrapper">' +
         '<div class="fm-sidebar" id="fmSidebar"></div>' +
         '<div class="fm-main">' +
+          '<div class="fm-pathbar" id="fmPathbar"></div>' +
           '<div class="fm-list" id="fmList"></div>' +
           '<div class="fm-viewer" id="fmViewer" style="display:none"></div>' +
         '</div>' +
       '</div>';
 
-    var sidebar = $('fmSidebar'), list = $('fmList'), viewer = $('fmViewer');
-    var currentPath = '/home/user';
+    var sidebar = $('fmSidebar'), list = $('fmList'), viewer = $('fmViewer'), pathbar = $('fmPathbar');
+    var currentPath = (data && data.path) || '/home/user';
+    var PROJECTS_PATH = '/home/user/projects';
 
     function buildSidebar(path, node, depth) {
       var keys = Object.keys(node);
@@ -743,6 +811,93 @@
       }
     }
 
+    function setPathbar(path) {
+      pathbar.innerHTML = '';
+      var parts = path.split('/').filter(Boolean);
+      var running = '';
+      var crumb = document.createElement('span');
+      crumb.className = 'fm-crumb';
+      crumb.textContent = '/';
+      crumb.addEventListener('click', function () { navigateTo('/'); });
+      pathbar.appendChild(crumb);
+      for (var i = 0; i < parts.length; i++) {
+        running += '/' + parts[i];
+        var sep = document.createElement('span');
+        sep.className = 'fm-crumb-sep';
+        sep.textContent = '/';
+        pathbar.appendChild(sep);
+        var c = document.createElement('span');
+        c.className = 'fm-crumb';
+        c.textContent = parts[i];
+        (function (p) { c.addEventListener('click', function () { navigateTo(p); }); })(running);
+        pathbar.appendChild(c);
+      }
+    }
+
+    function renderProjectRepos() {
+      list.innerHTML = '';
+      var repos = getRepoCache();
+      if (!repos.length) {
+        list.innerHTML = '<div class="fm-empty">\u23F3 Loading projects... Fetching from GitHub.</div>';
+        // attempt a fetch to populate
+        fetch('https://api.github.com/users/' + (window.SITE_CONFIG.github && window.SITE_CONFIG.github.username) + '/repos?sort=updated&per_page=100&type=all')
+          .then(function (r) { return r.ok ? r.json() : []; })
+          .then(function (repos) {
+            setRepoCache(repos);
+            if (currentPath === PROJECTS_PATH) renderProjectRepos();
+          })
+          .catch(function () { if (currentPath === PROJECTS_PATH) list.innerHTML = '<div class="fm-empty">Could not load projects. Open the Projects app first.</div>'; });
+        return;
+      }
+      repos.forEach(function (repo) {
+        var row = document.createElement('div');
+        row.className = 'fm-file' + (repo.archived ? ' archived' : '');
+        var icon = repo.archived ? '\uD83D\uDCE6' : '\uD83D\uDCC1';
+        var archivedBadge = repo.archived ? '<span class="fm-archived">ARCHIVED</span>' : '';
+        row.innerHTML = '<span class="fm-icon">' + icon + '</span><span class="fm-name">' + escapeHtml(repo.name) + archivedBadge + '</span><span class="fm-size">' + (repo.language || '') + '</span>';
+        (function (r) {
+          row.addEventListener('dblclick', function () { openProjectRepo(r); });
+        })(repo);
+        list.appendChild(row);
+      });
+    }
+
+    function openProjectRepo(repo) {
+      list.style.display = 'none';
+      viewer.style.display = 'block';
+      viewer.innerHTML =
+        '<div class="fm-viewer-header">' + escapeHtml(PROJECTS_PATH + '/' + repo.name) + ' &mdash; README</div>' +
+        '<div class="fm-repo-toolbar">' +
+          '<span class="fm-repo-name">' + escapeHtml(repo.name) + (repo.archived ? ' <span class="fm-repo-badge">ARCHIVED</span>' : '') + '</span>' +
+          '<button class="fm-repo-btn" data-act="github">\u2197 Open on GitHub</button>' +
+          '<button class="fm-repo-btn" data-act="back">\u2190 Back</button>' +
+        '</div>' +
+        '<div class="md-body" id="fmMdBody">Loading README...</div>';
+      var ghBtn = viewer.querySelector('[data-act="github"]');
+      var backBtn = viewer.querySelector('[data-act="back"]');
+      if (ghBtn) ghBtn.addEventListener('click', function () { window.open(repo.html_url, '_blank'); });
+      if (backBtn) backBtn.addEventListener('click', function () { navigateTo(PROJECTS_PATH); });
+
+      var mdBody = $('fmMdBody');
+      var branches = ['main', 'master'];
+      var bi = 0;
+      function tryBranch() {
+        if (bi >= branches.length) { mdBody.innerHTML = '<p class="md-empty">No README found in this repository.</p>'; return; }
+        fetch('https://raw.githubusercontent.com/' + repo.full_name + '/' + branches[bi] + '/README.md')
+          .then(function (r) {
+            if (!r.ok) { bi++; tryBranch(); return; }
+            return r.text();
+          })
+          .then(function (txt) {
+            if (txt === undefined) return;
+            mdBody.innerHTML = renderMarkdown(txt);
+          })
+          .catch(function () { bi++; tryBranch(); });
+      }
+      tryBranch();
+      viewer.scrollTop = 0;
+    }
+
     function navigateTo(path) {
       currentPath = path;
       viewer.style.display = 'none';
@@ -750,14 +905,17 @@
       sidebar.querySelectorAll('.fm-sidebar-item').forEach(function (el) { el.classList.remove('active'); });
       var match = sidebar.querySelector('[data-path="' + path + '"]');
       if (match) match.classList.add('active');
+      setPathbar(path);
+
+      if (path === PROJECTS_PATH) { renderProjectRepos(); return; }
 
       list.innerHTML = '';
       var parts = path.split('/').filter(Boolean);
       var node = VIRTUAL_FS;
-      for (var i = 0; i < parts.length; i++) { node = node[parts[i]] && node[parts[i]].children; if (!node) { list.innerHTML = '<div style="padding:12px;color:var(--text-secondary)">Path not found</div>'; return; } }
+      for (var i = 0; i < parts.length; i++) { node = node[parts[i]] && node[parts[i]].children; if (!node) { list.innerHTML = '<div class="fm-empty">Path not found</div>'; return; } }
 
       var names = Object.keys(node);
-      if (!names.length) { list.innerHTML = '<div style="padding:12px;color:var(--text-secondary)">Empty directory</div>'; return; }
+      if (!names.length) { list.innerHTML = '<div class="fm-empty">Empty directory</div>'; return; }
       names.sort();
       for (var j = 0; j < names.length; j++) {
         var name = names[j], item = node[name];
@@ -765,7 +923,7 @@
         row.className = 'fm-file';
         var icon = item.type === 'dir' ? '\uD83D\uDCC1' : '\uD83D\uDCC4';
         var size = item.size || '';
-        row.innerHTML = '<span class="fm-icon">' + icon + '</span><span class="fm-name">' + escapeHtml(name) + '</span><span class="fm-size">' + size + '</span>';
+        row.innerHTML = '<span class="fm-icon">' + icon + '</span><span class="fm-name">' + escapeHtml(name) + '</span><span class="fm-size">' + escapeHtml(size) + '</span>';
         if (item.type === 'dir') {
           row.addEventListener('dblclick', function (dirName) { return function () { navigateTo(currentPath + '/' + dirName); }; }(name));
         } else {
@@ -782,15 +940,27 @@
       if (!content) { content = 'Error: File content not available.'; }
       list.style.display = 'none';
       viewer.style.display = 'block';
-      viewer.innerHTML = '<div class="fm-viewer-header">' + escapeHtml(path) + ' &mdash; ' + escapeHtml(name) + '</div>' + '<pre style="margin:0;font-family:inherit;font-size:12px">' + escapeHtml(content) + '</pre>';
+      var bodyHtml;
+      if (/.md$/i.test(name)) {
+        bodyHtml = '<div class="md-body">' + renderMarkdown(content) + '</div>';
+      } else if (/\.json$/i.test(name)) {
+        try { bodyHtml = '<pre class="fm-pre">' + escapeHtml(JSON.stringify(JSON.parse(content), null, 2)) + '</pre>'; }
+        catch (e) { bodyHtml = '<pre class="fm-pre">' + escapeHtml(content) + '</pre>'; }
+      } else {
+        bodyHtml = '<pre class="fm-pre">' + escapeHtml(content) + '</pre>';
+      }
+      var backBtn = '<div class="fm-viewer-header">' + escapeHtml(path) + ' &mdash; ' + escapeHtml(name) + ' <button class="fm-repo-btn" data-act="fmBack">\u2190 Back</button></div>';
+      viewer.innerHTML = backBtn + bodyHtml;
+      var bb = viewer.querySelector('[data-act="fmBack"]');
+      if (bb) bb.addEventListener('click', function () { navigateTo(currentPath); });
       viewer.scrollTop = 0;
     }
 
     buildSidebar('', VIRTUAL_FS, 0);
-    navigateTo('/home/user');
+    navigateTo(currentPath);
   }
 
-  // ==================== SYSTEM INFO ====================
+    // ==================== SYSTEM INFO ====================
   function createSystemInfo(container) {
     var startTime = Date.now();
     function uptime() {
@@ -828,87 +998,7 @@
     }, 1000);
   }
 
-  // ==================== PHYSICS KNOWLEDGE ====================
-  var PHYSICS_DATA = [
-    
-  ];
-
-  function createPhysicsKnowledge(container, winId) {
-    var levelColors = { Advanced: 'var(--green)', Intermediate: 'var(--blue)', Basic: 'var(--amber)' };
-
-    container.innerHTML =
-      '<div class="pkw-wrapper">' +
-        '<div class="pkw-sidebar" id="pkwSidebar_' + winId + '"></div>' +
-        '<div class="pkw-main">' +
-          '<div class="pkw-header" id="pkwHeader_' + winId + '">\u269B Physics Knowledge Base</div>' +
-          '<div class="pkw-grid" id="pkwGrid_' + winId + '">' +
-            '<div class="pkw-placeholder">Select a category to explore physics topics</div>' +
-          '</div>' +
-        '</div>' +
-      '</div>';
-
-    var sidebar = $('pkwSidebar_' + winId);
-    var grid = $('pkwGrid_' + winId);
-
-    function buildSidebar() {
-      for (var i = 0; i < PHYSICS_DATA.length; i++) {
-        var cat = PHYSICS_DATA[i];
-        var el = document.createElement('button');
-        el.className = 'pkw-cat' + (i === 0 ? ' active' : '');
-        el.innerHTML = '<span class="pkw-cat-icon">' + cat.icon + '</span><span class="pkw-cat-name">' + cat.name + '</span>';
-        el.dataset.catIndex = i;
-        el.addEventListener('click', function () { selectCategory(parseInt(this.dataset.catIndex)); });
-        sidebar.appendChild(el);
-      }
-    }
-
-    function selectCategory(index) {
-      var cat = PHYSICS_DATA[index];
-      if (!cat) return;
-      sidebar.querySelectorAll('.pkw-cat').forEach(function (e) { e.classList.remove('active'); });
-      sidebar.children[index].classList.add('active');
-
-      var header = $('pkwHeader_' + winId);
-      if (header) header.textContent = cat.icon + '  ' + cat.name;
-
-      grid.innerHTML = '';
-      grid.style.display = 'grid';
-
-      for (var i = 0; i < cat.topics.length; i++) {
-        (function (topic, idx) {
-          var card = document.createElement('div');
-          card.className = 'pkw-card';
-          card.style.animationDelay = (idx * 0.08) + 's';
-
-          var formulasHtml = '';
-          for (var f = 0; f < topic.formulas.length; f++) {
-            formulasHtml += '<span class="pkw-formula">' + topic.formulas[f] + '</span>';
-          }
-
-          card.innerHTML =
-            '<div class="pkw-card-title">' + escapeHtml(topic.name) + '</div>' +
-            '<div class="pkw-card-desc">' + escapeHtml(topic.desc) + '</div>' +
-            '<div class="pkw-card-footer">' +
-              '<span class="pkw-card-level" style="color:' + (levelColors[topic.level] || 'var(--text-secondary)') + '">' + topic.level + '</span>' +
-              '<span class="pkw-card-count">' + topic.formulas.length + ' formula(s)</span>' +
-            '</div>' +
-            '<div class="pkw-card-formulas">' + formulasHtml + '</div>';
-
-          card.addEventListener('click', function () {
-            var wasOpen = card.classList.contains('expanded');
-            grid.querySelectorAll('.pkw-card.expanded').forEach(function (c) { c.classList.remove('expanded'); });
-            if (!wasOpen) card.classList.add('expanded');
-          });
-
-          grid.appendChild(card);
-        })(cat.topics[i], i);
-      }
-    }
-
-    buildSidebar();
-    selectCategory(0);
-  }
-
+  
   // ==================== PROJECTS ====================
   var LANG_COLORS = {
     'JavaScript': '#f7df1e', 'TypeScript': '#3178c6', 'HTML': '#e34c26', 'CSS': '#563d7c',
@@ -990,8 +1080,10 @@
           var langHtml = repo.language ? langDot(repo.language) + '<span class="prj-lang">' + escapeHtml(repo.language) + '</span>' : '';
           var starsHtml = repo.stargazers_count > 0 ? '<span class="prj-stars">\u2605 ' + repo.stargazers_count + '</span>' : '';
           var forkHtml = repo.fork ? '<span class="prj-fork">FORK</span>' : '';
+          var archivedHtml = repo.archived ? '<span class="prj-archived">ARCHIVED</span>' : '';
           var updatedHtml = '<span class="prj-updated">' + timeAgo(repo.updated_at) + '</span>';
-          var privacyIcon = repo.private ? '\uD83D\uDD12' : '\uD83D\uDCC2';
+          var privacyIcon = repo.archived ? '\uD83D\uDCE6' : (repo.private ? '\uD83D\uDD12' : '\uD83D\uDCC2');
+          if (repo.archived) row.classList.add('archived');
 
           row.innerHTML =
             '<div class="prj-row-icon">' + privacyIcon + '</div>' +
@@ -999,6 +1091,7 @@
               '<div class="prj-row-name">' +
                 '<a href="' + repo.html_url + '" target="_blank" rel="noreferrer">' + escapeHtml(repo.name) + '</a>' +
                 forkHtml +
+                archivedHtml +
               '</div>' +
               '<div class="prj-row-desc">' + desc + '</div>' +
               '<div class="prj-row-meta">' +
@@ -1057,6 +1150,7 @@
         })
         .then(function (repos) {
           allRepos = repos;
+          setRepoCache(repos);
           statusEl.style.display = 'none';
           filterAndSort();
         })
@@ -1131,6 +1225,7 @@
             '<span class="brw-fb-meta-item"><span class="brw-fb-label">Stars</span>\u2605 ' + (repo.stargazers_count || 0) + '</span>' +
             '<span class="brw-fb-meta-item"><span class="brw-fb-label">Forks</span>\u2442 ' + (repo.forks_count || 0) + '</span>' +
             '<span class="brw-fb-meta-item"><span class="brw-fb-label">Updated</span>' + new Date(repo.updated_at).toLocaleDateString() + '</span>' +
+            (repo.archived ? '<span class="brw-fb-meta-item"><span class="brw-fb-label">Status</span>Archived</span>' : '') +
           '</div>' +
           '<div class="brw-fb-note">\u26A0\uFE0F This site does not allow embedding in an iframe. Open it in your browser to view the full page.</div>' +
           '<button class="brw-fb-btn">\u2197 Open in Browser</button>';
