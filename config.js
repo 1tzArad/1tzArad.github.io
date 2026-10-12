@@ -36,7 +36,7 @@ window.SITE_CONFIG = {
     'Tools': [
       'Git',
       'npm',
-      'docker'
+      'Docker'
     ],
   },
 
